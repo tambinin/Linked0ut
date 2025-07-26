@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LinkedOut - Le LinkedIn des Chômeurs</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/components.css">
+    <link rel="stylesheet" href="styles/responsive.css">
+</head>
+<body class="auth-page">
+    <div class="container">
+        <header class="auth-header">
+            <div class="logo">
+                <h1>LinkedOut</h1>
+                <p class="tagline">Le réseau social qui célèbre l'art de ne pas travailler</p>
+            </div>
+        </header>
+
+        <main class="auth-main">
+            <div class="auth-container">
+                <div class="auth-form-container">
+                    <div class="auth-tabs">
+                        <button class="auth-tab active" data-tab="login">Connexion</button>
+                        <button class="auth-tab" data-tab="register">Inscription</button>
+                    </div>
+
+                    <!-- Login Form -->
+                    <form id="login-form" class="auth-form active">
+                        <h2>Bienvenue dans votre chômage professionnel</h2>
+                        <div class="form-group">
+                            <label for="login-email">Email</label>
+                            <input type="email" id="login-email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="login-password">Mot de passe</label>
+                            <input type="password" id="login-password" name="password" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Se connecter</button>
+                        <p class="demo-info">
+                            Compte démo: test@linkedout.com / password123
+                        </p>
+                    </form>
+
+                    <!-- Register Form -->
+                    <form id="register-form" class="auth-form">
+                        <h2>Rejoindre la communauté des inactifs</h2>
+                        <div class="form-group">
+                            <label for="register-name">Nom complet</label>
+                            <input type="text" id="register-name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="register-email">Email</label>
+                            <input type="email" id="register-email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="register-password">Mot de passe</label>
+                            <input type="password" id="register-password" name="password" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="unemployment-start">Début du chômage</label>
+                            <input type="date" id="unemployment-start" name="unemploymentStart" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Créer mon profil de chômeur</button>
+                    </form>
+                </div>
+
+                <div class="auth-features">
+                    <h3>Pourquoi LinkedOut ?</h3>
+                    <div class="feature-list">
+                        <div class="feature">
+                            <span class="feature-icon">🛋️</span>
+                            <div>
+                                <h4>Expertise en glandouille</h4>
+                                <p>Affichez fièrement vos compétences en Netflix et scroll infini</p>
+                            </div>
+                        </div>
+                        <div class="feature">
+                            <span class="feature-icon">📊</span>
+                            <div>
+                                <h4>Compteur de chômage</h4>
+                                <p>Suivez vos records de jours sans emploi</p>
+                            </div>
+                        </div>
+                        <div class="feature">
+                            <span class="feature-icon">🏆</span>
+                            <div>
+                                <h4>Badges d'inactivité</h4>
+                                <p>Débloquez des récompenses pour vos échecs professionnels</p>
+                            </div>
+                        </div>
+                        <div class="feature">
+                            <span class="feature-icon">💼</span>
+                            <div>
+                                <h4>Offres d'emploi bidons</h4>
+                                <p>Postulez pour "Testeur de canapé" et autres métiers d'avenir</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/utils.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/auth.js"></script>
+</body>
+</html>

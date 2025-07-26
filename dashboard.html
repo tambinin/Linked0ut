@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tableau de bord - LinkedOut</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/components.css">
+    <link rel="stylesheet" href="styles/responsive.css">
+</head>
+<body class="app-layout">
+    <header class="app-header">
+        <div class="container">
+            <nav class="app-nav">
+                <a href="dashboard.html" class="app-logo">LinkedOut</a>
+                
+                <ul class="nav-menu">
+                    <li><a href="dashboard.html" class="nav-link active">Accueil</a></li>
+                    <li><a href="profile.html" class="nav-link">Mon Profil</a></li>
+                    <li><a href="network.html" class="nav-link">Réseau</a></li>
+                    <li><a href="jobs.html" class="nav-link">Emplois Bidons</a></li>
+                </ul>
+                
+                <div class="user-menu">
+                    <div class="user-avatar" id="user-avatar">JG</div>
+                    <button class="btn btn-secondary" onclick="window.LinkedOutAuth.logout()">Déconnexion</button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <!-- Left Sidebar -->
+        <aside class="sidebar-left">
+            <!-- Profile Summary -->
+            <div class="card" id="profile-summary">
+                <div class="profile-summary-header">
+                    <div class="profile-avatar-medium" id="sidebar-avatar">JG</div>
+                    <div class="profile-summary-info">
+                        <h3 id="sidebar-name">Jean Glandeur</h3>
+                        <p id="sidebar-title">Expert en procrastination avancée</p>
+                    </div>
+                </div>
+                <div class="unemployment-summary">
+                    <div class="counter-display">
+                        <span class="counter-number" id="unemployment-days">412</span>
+                        <span class="counter-label">jours sans emploi</span>
+                    </div>
+                </div>
+                <div class="profile-actions">
+                    <a href="profile.html" class="btn btn-primary">Voir mon profil</a>
+                </div>
+            </div>
+
+            <!-- Quick Stats -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Mes Statistiques</h3>
+                </div>
+                <div class="stats-list" id="quick-stats">
+                    <div class="stat-item">
+                        <span class="stat-label">Connexions</span>
+                        <span class="stat-value" id="connections-count">3</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Endorsements</span>
+                        <span class="stat-value" id="endorsements-count">167</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Badges</span>
+                        <span class="stat-value" id="badges-count">3</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Posts publiés</span>
+                        <span class="stat-value" id="posts-count">8</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Badges -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Badges Récents</h3>
+                </div>
+                <div class="recent-badges" id="recent-badges">
+                    <!-- Badges will be loaded here -->
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Feed -->
+        <section class="main-feed">
+            <!-- Post Composer -->
+            <div class="post-composer">
+                <div class="composer-header">
+                    <div class="post-avatar" id="composer-avatar">JG</div>
+                    <textarea 
+                        class="composer-input" 
+                        id="post-content"
+                        placeholder="Partagez vos exploits de glandouille avec la communauté..."
+                        rows="3"></textarea>
+                </div>
+                <div class="composer-actions">
+                    <div class="composer-buttons">
+                        <button class="btn btn-secondary" id="add-emoji">😊</button>
+                        <button class="btn btn-secondary" id="add-fail">🤦‍♂️ Échec</button>
+                        <button class="btn btn-secondary" id="add-achievement">🏆 Exploit</button>
+                    </div>
+                    <button class="btn btn-primary" id="publish-post">Publier</button>
+                </div>
+            </div>
+
+            <!-- Feed Filter -->
+            <div class="feed-filter">
+                <button class="filter-btn active" data-filter="all">Tous les posts</button>
+                <button class="filter-btn" data-filter="connections">Mes connexions</button>
+                <button class="filter-btn" data-filter="achievements">Exploits</button>
+                <button class="filter-btn" data-filter="failures">Échecs</button>
+            </div>
+
+            <!-- Posts Feed -->
+            <div class="posts-container" id="posts-feed">
+                <!-- Posts will be loaded here -->
+                <div class="loading-text">
+                    <div class="loading-spinner"></div>
+                    Chargement des posts...
+                </div>
+            </div>
+        </section>
+
+        <!-- Right Sidebar -->
+        <aside class="sidebar-right">
+            <!-- Connection Requests -->
+            <div class="card" id="connection-requests-card">
+                <div class="card-header">
+                    <h3 class="card-title">Demandes de connexion</h3>
+                </div>
+                <div class="connection-requests" id="connection-requests">
+                    <!-- Connection requests will be loaded here -->
+                </div>
+            </div>
+
+            <!-- Trending Skills -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Compétences Tendances</h3>
+                </div>
+                <div class="trending-skills">
+                    <div class="skill-trend">
+                        <span class="skill-name">Netflix Expert</span>
+                        <span class="skill-trend-indicator">📈 +15%</span>
+                    </div>
+                    <div class="skill-trend">
+                        <span class="skill-name">Maître du scroll infini</span>
+                        <span class="skill-trend-indicator">📈 +12%</span>
+                    </div>
+                    <div class="skill-trend">
+                        <span class="skill-name">Champion de sieste</span>
+                        <span class="skill-trend-indicator">📈 +8%</span>
+                    </div>
+                    <div class="skill-trend">
+                        <span class="skill-name">Procrastination professionnelle</span>
+                        <span class="skill-trend-indicator">📈 +22%</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Latest Job Offers -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Nouvelles Offres Bidons</h3>
+                    <a href="jobs.html" class="view-all-link">Voir tout</a>
+                </div>
+                <div class="job-preview" id="latest-jobs">
+                    <!-- Latest jobs will be loaded here -->
+                </div>
+            </div>
+
+            <!-- LinkedOut Tips -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Conseils LinkedOut</h3>
+                </div>
+                <div class="tips-list">
+                    <div class="tip-item">
+                        <span class="tip-icon">💡</span>
+                        <p>Publiez régulièrement vos échecs pour inspirer les autres !</p>
+                    </div>
+                    <div class="tip-item">
+                        <span class="tip-icon">🤝</span>
+                        <p>Connectez-vous avec d'autres experts en glandouille</p>
+                    </div>
+                    <div class="tip-item">
+                        <span class="tip-icon">🏆</span>
+                        <p>Collectionnez les badges pour prouver votre inactivité</p>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </main>
+
+    <script src="js/utils.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/feed.js"></script>
+    <script src="js/endorsements.js"></script>
+    <script src="js/badges.js"></script>
+    <script>
+        // Initialize dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check authentication
+            if (!window.LinkedOutAuth.requireAuth()) {
+                return;
+            }
+
+            // Initialize data
+            window.LinkedOutData.init();
+            
+            // Initialize dashboard components
+            initializeDashboard();
+        });
+
+        function initializeDashboard() {
+            const currentUser = window.LinkedOutAuth.getCurrentUser();
+            
+            // Update user info in UI
+            updateUserInterface(currentUser);
+            
+            // Load feed
+            window.LinkedOutFeed.loadFeed();
+            
+            // Load connection requests
+            loadConnectionRequests();
+            
+            // Load latest jobs
+            loadLatestJobs();
+            
+            // Initialize post composer
+            initializePostComposer();
+            
+            // Initialize feed filters
+            initializeFeedFilters();
+        }
+
+        function updateUserInterface(user) {
+            // Update avatars
+            const avatars = document.querySelectorAll('#user-avatar, #sidebar-avatar, #composer-avatar');
+            const initials = window.LinkedOutUtils.StringUtils.getInitials(user.name);
+            avatars.forEach(avatar => {
+                avatar.textContent = initials;
+            });
+            
+            // Update profile info
+            document.getElementById('sidebar-name').textContent = user.name;
+            document.getElementById('sidebar-title').textContent = user.title;
+            
+            // Calculate unemployment days
+            const unemploymentDays = window.LinkedOutUtils.DateUtils.daysSince(user.unemploymentStart);
+            document.getElementById('unemployment-days').textContent = unemploymentDays;
+            
+            // Update stats
+            document.getElementById('connections-count').textContent = user.connections.length;
+            
+            // Calculate total endorsements
+            const totalEndorsements = user.skills.reduce((sum, skill) => sum + skill.endorsements, 0);
+            document.getElementById('endorsements-count').textContent = totalEndorsements;
+            
+            // Count earned badges
+            const earnedBadges = user.badges.filter(badge => badge.earned).length;
+            document.getElementById('badges-count').textContent = earnedBadges;
+            
+            // Count user posts
+            const posts = window.LinkedOutData.getPosts();
+            const userPosts = posts.filter(post => post.userId === user.id);
+            document.getElementById('posts-count').textContent = userPosts.length;
+            
+            // Load recent badges
+            loadRecentBadges(user);
+        }
+
+        function loadRecentBadges(user) {
+            const container = document.getElementById('recent-badges');
+            const earnedBadges = user.badges.filter(badge => badge.earned);
+            
+            if (earnedBadges.length === 0) {
+                container.innerHTML = '<p class="no-badges">Aucun badge encore... commencez à glander !</p>';
+                return;
+            }
+            
+            // Show last 3 badges
+            const recentBadges = earnedBadges.slice(-3).reverse();
+            const badgeDefinitions = window.LinkedOutData.getBadges();
+            
+            container.innerHTML = recentBadges.map(userBadge => {
+                const definition = badgeDefinitions.find(b => b.id === userBadge.id);
+                if (!definition) return '';
+                
+                return `
+                    <div class="recent-badge">
+                        <span class="badge-icon">${definition.icon}</span>
+                        <div class="badge-info">
+                            <div class="badge-name">${definition.title}</div>
+                            <div class="badge-date">${window.LinkedOutUtils.DateUtils.formatDate(userBadge.earnedDate)}</div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function loadConnectionRequests() {
+            const requests = window.LinkedOutAuth.getPendingConnectionRequests();
+            const container = document.getElementById('connection-requests');
+            const card = document.getElementById('connection-requests-card');
+            
+            if (requests.length === 0) {
+                card.style.display = 'none';
+                return;
+            }
+            
+            card.style.display = 'block';
+            container.innerHTML = requests.map(request => {
+                const fromUser = window.LinkedOutAuth.getUserById(request.fromUserId);
+                if (!fromUser) return '';
+                
+                const initials = window.LinkedOutUtils.StringUtils.getInitials(fromUser.name);
+                
+                return `
+                    <div class="connection-request">
+                        <div class="request-avatar">${initials}</div>
+                        <div class="request-info">
+                            <div class="request-name">${fromUser.name}</div>
+                            <div class="request-title">${fromUser.title}</div>
+                        </div>
+                        <div class="request-actions">
+                            <button class="btn btn-primary btn-sm" onclick="acceptConnection('${request.id}')">✓</button>
+                            <button class="btn btn-secondary btn-sm" onclick="rejectConnection('${request.id}')">✗</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function loadLatestJobs() {
+            const jobs = window.LinkedOutData.getJobs();
+            const container = document.getElementById('latest-jobs');
+            
+            // Show latest 3 jobs
+            const latestJobs = jobs.slice(0, 3);
+            
+            container.innerHTML = latestJobs.map(job => `
+                <div class="job-preview-item">
+                    <div class="job-preview-title">${job.title}</div>
+                    <div class="job-preview-company">${job.company}</div>
+                    <div class="job-preview-salary">${job.salary}</div>
+                </div>
+            `).join('');
+        }
+
+        function initializePostComposer() {
+            const publishBtn = document.getElementById('publish-post');
+            const contentTextarea = document.getElementById('post-content');
+            
+            publishBtn.addEventListener('click', () => {
+                const content = contentTextarea.value.trim();
+                if (!content) {
+                    window.LinkedOutUtils.Notifications.show('Veuillez écrire quelque chose !', 'warning');
+                    return;
+                }
+                
+                window.LinkedOutFeed.createPost(content);
+                contentTextarea.value = '';
+            });
+            
+            // Quick insert buttons
+            document.getElementById('add-emoji').addEventListener('click', () => {
+                insertAtCursor(contentTextarea, ' 😊');
+            });
+            
+            document.getElementById('add-fail').addEventListener('click', () => {
+                insertAtCursor(contentTextarea, ' 🤦‍♂️ Nouvel échec : ');
+            });
+            
+            document.getElementById('add-achievement').addEventListener('click', () => {
+                insertAtCursor(contentTextarea, ' 🏆 Exploit du jour : ');
+            });
+        }
+
+        function initializeFeedFilters() {
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    // Update active state
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    
+                    // Apply filter
+                    const filter = btn.dataset.filter;
+                    window.LinkedOutFeed.filterPosts(filter);
+                });
+            });
+        }
+
+        function insertAtCursor(textarea, text) {
+            const start = textarea.selectionStart;
+            const end = textarea.selectionEnd;
+            const value = textarea.value;
+            
+            textarea.value = value.substring(0, start) + text + value.substring(end);
+            textarea.selectionStart = textarea.selectionEnd = start + text.length;
+            textarea.focus();
+        }
+
+        function acceptConnection(requestId) {
+            if (window.LinkedOutAuth.acceptConnectionRequest(requestId)) {
+                loadConnectionRequests();
+                updateUserInterface(window.LinkedOutAuth.getCurrentUser());
+            }
+        }
+
+        function rejectConnection(requestId) {
+            if (window.LinkedOutAuth.rejectConnectionRequest(requestId)) {
+                loadConnectionRequests();
+            }
+        }
+    </script>
+</body>
+</html>
