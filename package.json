@@ -1,0 +1,47 @@
+{
+  "name": "linkedout",
+  "version": "1.0.0",
+  "description": "LinkedOut - Le LinkedIn des Chômeurs - A humorous LinkedIn parody celebrating the art of unemployment",
+  "main": "index.html",
+  "scripts": {
+    "start": "python3 -m http.server 8000",
+    "serve": "npx serve .",
+    "dev": "npx live-server --port=8000",
+    "build": "echo 'No build process needed for vanilla JS app'",
+    "test": "echo 'No test framework configured yet'",
+    "deploy": "echo 'Deploy to your preferred hosting service'"
+  },
+  "keywords": [
+    "linkedin",
+    "parody",
+    "unemployment",
+    "social-network",
+    "humor",
+    "javascript",
+    "vanilla-js",
+    "html5",
+    "css3"
+  ],
+  "author": "LinkedOut Team",
+  "license": "MIT",
+  "devDependencies": {
+    "live-server": "^1.2.2",
+    "serve": "^14.2.1"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tambinin/Linked0ut.git"
+  },
+  "bugs": {
+    "url": "https://github.com/tambinin/Linked0ut/issues"
+  },
+  "homepage": "https://github.com/tambinin/Linked0ut#readme"
+}
