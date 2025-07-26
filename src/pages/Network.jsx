@@ -26,7 +26,7 @@ import SidebarLeft from '../components/Layout/SidebarLeft';
 import SidebarRight from '../components/Layout/SidebarRight';
 import { useAuth } from '../context/AuthContext.jsx';
 import { colors } from '../styles/theme.js';
-import { User, SAMPLE_USERS } from '../data/mockData.js';
+import { SAMPLE_USERS } from '../data/mockData.js';
 
 const NetworkContainer = styled(Container)(({ theme }) => ({
   maxWidth: '1200px !important',
@@ -98,12 +98,12 @@ const Network = () => {
       .substring(0, 2);
   };
 
-  const getConnections = (): User[] => {
+  const getConnections = () => {
     if (!user) return [];
     return SAMPLE_USERS.filter(u => user.connections.includes(u.id));
   };
 
-  const getSuggestions = (): User[] => {
+  const getSuggestions = () => {
     if (!user) return [];
     return SAMPLE_USERS.filter(u => 
       u.id !== user.id && 
@@ -112,7 +112,7 @@ const Network = () => {
     );
   };
 
-  const getFilteredUsers = (users: User[]) => {
+  const getFilteredUsers = (users) => {
     if (!searchTerm) return users;
     return users.filter(u =>
       u.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -132,7 +132,7 @@ const Network = () => {
     return diffDays;
   };
 
-  const getConnectionReason = (targetUser: User) => {
+  const getConnectionReason = (targetUser) => {
     if (!user) return '';
     
     // Find common skills

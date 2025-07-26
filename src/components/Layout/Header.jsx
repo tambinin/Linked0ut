@@ -132,16 +132,14 @@ const ProfileButton = styled(Button, {
   },
 }));
 
-interface HeaderProps {}
-
-const Header: React.FC<HeaderProps> = () => {
+const Header = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { user, logout } = useAuth();
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [anchorEl, setAnchorEl] = useState(null);
   const [searchValue, setSearchValue] = useState('');
 
-  const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
+  const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
 
@@ -155,15 +153,15 @@ const Header: React.FC<HeaderProps> = () => {
     handleMenuClose();
   };
 
-  const handleNavigation = (path: string) => {
+  const handleNavigation = (path) => {
     navigate(path);
   };
 
-  const isActive = (path: string) => {
+  const isActive = (path) => {
     return location.pathname === path;
   };
 
-  const getUserInitials = (name: string) => {
+  const getUserInitials = (name) => {
     return name
       .split(' ')
       .map(n => n[0])
