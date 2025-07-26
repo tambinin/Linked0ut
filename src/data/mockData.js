@@ -1,80 +1,5 @@
 // LinkedOut - Mock Data for React Application
 
-export interface User {
-  id: string;
-  name: string;
-  email: string;
-  password: string;
-  title: string;
-  unemploymentStart: string;
-  avatar?: string;
-  skills: Skill[];
-  connections: string[];
-  badges: UserBadge[];
-  bio: string;
-  failures: string[];
-}
-
-export interface Skill {
-  name: string;
-  endorsements: number;
-}
-
-export interface UserBadge {
-  id: string;
-  earned: boolean;
-  earnedDate?: string;
-}
-
-export interface Post {
-  id: string;
-  userId: string;
-  content: string;
-  timestamp: string;
-  likes: number;
-  comments: number;
-  likedBy: string[];
-}
-
-export interface Job {
-  id: string;
-  title: string;
-  company: string;
-  location: string;
-  salary: string;
-  type: string;
-  description: string;
-  requirements: string[];
-  tags: string[];
-  posted: string;
-  applications: number;
-}
-
-export interface Badge {
-  id: string;
-  title: string;
-  description: string;
-  icon: string;
-  requirement: string;
-}
-
-export interface Comment {
-  id: string;
-  postId: string;
-  userId: string;
-  content: string;
-  timestamp: string;
-}
-
-export interface ConnectionRequest {
-  id: string;
-  fromUserId: string;
-  toUserId: string;
-  message?: string;
-  timestamp: string;
-  status: 'pending' | 'accepted' | 'rejected';
-}
-
 // Sample users data
 export const SAMPLE_USERS: User[] = [
   {
@@ -285,6 +210,176 @@ export const SAMPLE_POSTS: Post[] = [
     likes: 22,
     comments: 11,
     likedBy: ['user_1', 'user_4', 'user_5']
+  },
+  {
+    id: 'post_9',
+    userId: 'user_4',
+    content: '🏆 Nouveau record personnel : 14h de sommeil d\'affilée ! \n\nJe pense sérieusement à postuler pour les JO de la sieste. Ma technique de "retournement de coussin" est révolutionnaire ! 😴',
+    timestamp: '2024-01-21T16:30:00Z',
+    likes: 35,
+    comments: 18,
+    likedBy: ['user_1', 'user_2', 'user_3', 'user_5']
+  },
+  {
+    id: 'post_10',
+    userId: 'user_2',
+    content: 'Petit rappel que "Netflix and skill" devrait être une option sur LinkedOut ! \n\nMa série du moment : "How to Get Away with Not Working" - très inspirant pour mon développement professionnel 📺✨',
+    timestamp: '2024-01-21T10:15:00Z',
+    likes: 28,
+    comments: 12,
+    likedBy: ['user_1', 'user_3', 'user_4']
+  },
+  {
+    id: 'post_11',
+    userId: 'user_1',
+    content: 'Breaking news : j\'ai créé une startup ! \n\n"ProcrastiTech" - une app qui te rappelle de faire les choses... demain. \n\nLancement prévu pour... bientôt (quand j\'aurai envie) 🚀',
+    timestamp: '2024-01-20T19:45:00Z',
+    likes: 52,
+    comments: 23,
+    likedBy: ['user_2', 'user_3', 'user_4', 'user_5']
+  },
+  {
+    id: 'post_12',
+    userId: 'user_3',
+    content: 'Conseil carrière du jour : Si quelqu\'un vous demande vos "soft skills", répondez "Ultra-soft, comme mon matelas" 🛏️ \n\n#ChômageExpertise #TeamCanapé #ProcrastinationPro',
+    timestamp: '2024-01-20T14:20:00Z',
+    likes: 41,
+    comments: 15,
+    likedBy: ['user_1', 'user_2', 'user_4', 'user_5']
+  },
+  {
+    id: 'post_13',
+    userId: 'user_5',
+    content: 'Ma philosophie professionnelle : "Work smarter, not harder" \n\nTraduction : "Work never, rest always" 😎 \n\nJe donne des masterclass sur Zoom... depuis mon lit évidemment !',
+    timestamp: '2024-01-20T11:30:00Z',
+    likes: 33,
+    comments: 14,
+    likedBy: ['user_1', 'user_2', 'user_3', 'user_4']
+  }
+];
+
+// Sample humorous notifications for auto-display
+export const SAMPLE_NOTIFICATIONS = [
+  {
+    id: 'notif_1',
+    type: 'endorsement',
+    title: 'Nouveau endorsement !',
+    message: '🎉 Vous avez reçu un endorsement pour "Maître de la procrastination" !',
+    icon: '🏆',
+    timestamp: new Date(Date.now() - 5000).toISOString(),
+    read: false
+  },
+  {
+    id: 'notif_2',
+    type: 'rejection',
+    title: 'Record battu !',
+    message: '😱 Votre profil a été refusé par 3 employeurs en même temps - nouveau record !',
+    icon: '📊',
+    timestamp: new Date(Date.now() - 15000).toISOString(),
+    read: false
+  },
+  {
+    id: 'notif_3',
+    type: 'badge',
+    title: 'Badge débloqué !',
+    message: '🏆 Badge débloqué : "Champion des excuses créatives"',
+    icon: '🎭',
+    timestamp: new Date(Date.now() - 25000).toISOString(),
+    read: false
+  },
+  {
+    id: 'notif_4',
+    type: 'reminder',
+    title: 'Rappel important',
+    message: '💤 Rappel : Il est 14h, temps de faire votre première pause de la journée',
+    icon: '⏰',
+    timestamp: new Date(Date.now() - 35000).toISOString(),
+    read: false
+  },
+  {
+    id: 'notif_5',
+    type: 'level_up',
+    title: 'Niveau supérieur !',
+    message: '🎮 Votre niveau en "Expert Netflix" vient d\'augmenter',
+    icon: '📺',
+    timestamp: new Date(Date.now() - 45000).toISOString(),
+    read: false
+  },
+  {
+    id: 'notif_6',
+    type: 'suggestion',
+    title: 'Suggestion de poste',
+    message: '💼 Nouveau poste parfait pour vous : "Testeur de canapé professionnel"',
+    icon: '🛋️',
+    timestamp: new Date(Date.now() - 55000).toISOString(),
+    read: false
+  }
+];
+
+// Sample comments with humor for posts
+export const SAMPLE_COMMENTS = [
+  {
+    id: 'comment_1',
+    postId: 'post_1',
+    userId: 'user_2',
+    content: 'Respect total pour cette technique d\'évitement ! 👏',
+    timestamp: '2024-01-24T15:30:00Z'
+  },
+  {
+    id: 'comment_2',
+    postId: 'post_1',
+    userId: 'user_3',
+    content: 'Moi j\'aurais dit que j\'étais en télétravail depuis le canapé 😂',
+    timestamp: '2024-01-24T15:45:00Z'
+  },
+  {
+    id: 'comment_3',
+    postId: 'post_2',
+    userId: 'user_1',
+    content: 'Pro tip: ajouter "consultant en optimisation personnelle" sur ton CV',
+    timestamp: '2024-01-24T10:20:00Z'
+  },
+  {
+    id: 'comment_4',
+    postId: 'post_3',
+    userId: 'user_5',
+    content: 'Tu devrais donner des cours de procrastination avancée',
+    timestamp: '2024-01-23T16:15:00Z'
+  },
+  {
+    id: 'comment_5',
+    postId: 'post_4',
+    userId: 'user_2',
+    content: 'Cette stratégie mérite un endorsement en "Créativité professionnelle"',
+    timestamp: '2024-01-23T13:45:00Z'
+  },
+  {
+    id: 'comment_6',
+    postId: 'post_5',
+    userId: 'user_4',
+    content: 'La philosophie du frigo, c\'est du génie pur ! 🍕',
+    timestamp: '2024-01-23T11:30:00Z'
+  },
+  {
+    id: 'comment_7',
+    postId: 'post_9',
+    userId: 'user_1',
+    content: 'Technique de champion ! Mon record perso est seulement 12h 😴',
+    timestamp: '2024-01-21T17:00:00Z'
+  },
+  {
+    id: 'comment_8',
+    postId: 'post_11',
+    userId: 'user_3',
+    content: 'Je serais ton premier investisseur... quand j\'aurai de l\'argent 💰',
+    timestamp: '2024-01-20T20:15:00Z'
+  },
+  {
+    id: 'comment_9',
+    postId: 'post_12',
+    userId: 'user_5',
+    content: 'Génie ! Je vais utiliser ça à mon prochain entretien... si j\'en ai un 😅',
+    timestamp: '2024-01-20T14:45:00Z'
   }
 ];
 

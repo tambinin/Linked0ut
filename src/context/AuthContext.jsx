@@ -1,40 +1,13 @@
-import React, { createContext, useContext, useReducer, useEffect, ReactNode } from 'react';
-import { User, SAMPLE_USERS } from '../data/mockData';
+import React, { createContext, useContext, useReducer, useEffect } from 'react';
+import { SAMPLE_USERS } from '../data/mockData.js';
 
-interface AuthState {
-  user: User | null;
-  isLoading: boolean;
-  isAuthenticated: boolean;
-}
-
-interface AuthContextType extends AuthState {
-  login: (email: string, password: string) => Promise<{ success: boolean; message?: string }>;
-  register: (userData: RegisterData) => Promise<{ success: boolean; message?: string }>;
-  logout: () => void;
-  updateUser: (userData: Partial<User>) => void;
-}
-
-interface RegisterData {
-  name: string;
-  email: string;
-  password: string;
-  title: string;
-}
-
-type AuthAction = 
-  | { type: 'LOGIN_START' }
-  | { type: 'LOGIN_SUCCESS'; payload: User }
-  | { type: 'LOGIN_FAILURE' }
-  | { type: 'LOGOUT' }
-  | { type: 'UPDATE_USER'; payload: Partial<User> };
-
-const initialState: AuthState = {
+const initialState = {
   user: null,
   isLoading: false,
   isAuthenticated: false,
 };
 
-function authReducer(state: AuthState, action: AuthAction): AuthState {
+function authReducer(state, action) {
   switch (action.type) {
     case 'LOGIN_START':
       return {
@@ -71,7 +44,7 @@ function authReducer(state: AuthState, action: AuthAction): AuthState {
   }
 }
 
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
+const AuthContext = createContext(undefined);
 
 export const useAuth = () => {
   const context = useContext(AuthContext);
@@ -81,14 +54,10 @@ export const useAuth = () => {
   return context;
 };
 
-interface AuthProviderProps {
-  children: ReactNode;
-}
-
 // Storage utilities
 const STORAGE_KEY = 'linkedout_current_user';
 
-const getStoredUser = (): User | null => {
+const getStoredUser = () => {
   try {
     const stored = localStorage.getItem(STORAGE_KEY);
     return stored ? JSON.parse(stored) : null;
@@ -97,7 +66,7 @@ const getStoredUser = (): User | null => {
   }
 };
 
-const setStoredUser = (user: User | null): void => {
+const setStoredUser = (user) => {
   try {
     if (user) {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(user));
@@ -109,7 +78,7 @@ const setStoredUser = (user: User | null): void => {
   }
 };
 
-const getUsers = (): User[] => {
+const getUsers = () => {
   try {
     const stored = localStorage.getItem('linkedout_users');
     return stored ? JSON.parse(stored) : SAMPLE_USERS;
@@ -118,7 +87,7 @@ const getUsers = (): User[] => {
   }
 };
 
-const saveUsers = (users: User[]): void => {
+const saveUsers = (users) => {
   try {
     localStorage.setItem('linkedout_users', JSON.stringify(users));
   } catch {
@@ -126,7 +95,7 @@ const saveUsers = (users: User[]): void => {
   }
 };
 
-export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
+export const AuthProvider = ({ children }) => {
   const [state, dispatch] = useReducer(authReducer, initialState);
 
   // Initialize auth state from localStorage
@@ -143,7 +112,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     }
   }, []);
 
-  const login = async (email: string, password: string): Promise<{ success: boolean; message?: string }> => {
+  const login = async (email, password) => {
     dispatch({ type: 'LOGIN_START' });
 
     // Simulate network delay
@@ -162,7 +131,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     }
   };
 
-  const register = async (userData: RegisterData): Promise<{ success: boolean; message?: string }> => {
+  const register = async (userData) => {
     dispatch({ type: 'LOGIN_START' });
 
     // Simulate network delay
@@ -177,7 +146,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     }
 
     // Create new user
-    const newUser: User = {
+    const newUser = {
       id: `user_${Date.now()}`,
       name: userData.name,
       email: userData.email,
@@ -206,7 +175,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     setStoredUser(null);
   };
 
-  const updateUser = (userData: Partial<User>) => {
+  const updateUser = (userData) => {
     if (!state.user) return;
 
     const updatedUser = { ...state.user, ...userData };
@@ -219,7 +188,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     saveUsers(updatedUsers);
   };
 
-  const value: AuthContextType = {
+  const value = {
     ...state,
     login,
     register,

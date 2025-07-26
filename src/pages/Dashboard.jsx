@@ -21,9 +21,10 @@ import Header from '../components/Layout/Header';
 import SidebarLeft from '../components/Layout/SidebarLeft';
 import SidebarRight from '../components/Layout/SidebarRight';
 import PostCard from '../components/Common/PostCard';
-import { useAuth } from '../context/AuthContext';
-import { colors } from '../styles/theme';
-import { Post, SAMPLE_POSTS } from '../data/mockData';
+import NotificationToast from '../components/Common/NotificationToast';
+import { useAuth } from '../context/AuthContext.jsx';
+import { colors } from '../styles/theme.js';
+import { SAMPLE_POSTS, SAMPLE_NOTIFICATIONS } from '../data/mockData.js';
 
 const DashboardContainer = styled(Container)(({ theme }) => ({
   maxWidth: '1200px !important',
@@ -96,14 +97,49 @@ const FeedFilters = styled(Card)(({ theme }) => ({
   borderRadius: theme.spacing(1),
 }));
 
-interface DashboardProps {}
-
-const Dashboard: React.FC<DashboardProps> = () => {
+const Dashboard = () => {
   const { user } = useAuth();
-  const [posts, setPosts] = useState<Post[]>([]);
+  const [posts, setPosts] = useState([]);
   const [postText, setPostText] = useState('');
   const [filterTab, setFilterTab] = useState(0);
-  const [filteredPosts, setFilteredPosts] = useState<Post[]>([]);
+  const [filteredPosts, setFilteredPosts] = useState([]);
+  const [notifications, setNotifications] = useState([]);
+
+  // Initialize posts
+  useEffect(() => {
+    const savedPosts = localStorage.getItem('linkedout_posts');
+    if (savedPosts) {
+      setPosts(JSON.parse(savedPosts));
+    } else {
+      setPosts(SAMPLE_POSTS);
+      localStorage.setItem('linkedout_posts', JSON.stringify(SAMPLE_POSTS));
+    }
+  }, []);
+
+  // Auto-display humorous notifications
+  useEffect(() => {
+    if (!user) return;
+
+    // Schedule notifications to appear over time
+    const scheduleNotifications = () => {
+      const shuffledNotifications = [...SAMPLE_NOTIFICATIONS].sort(() => Math.random() - 0.5);
+      
+      shuffledNotifications.forEach((notification, index) => {
+        setTimeout(() => {
+          setNotifications(prev => [...prev, { ...notification, displayId: Date.now() + index }]);
+        }, (index + 1) * 8000); // Show one every 8 seconds
+      });
+    };
+
+    // Start showing notifications after 3 seconds
+    const initialTimeout = setTimeout(scheduleNotifications, 3000);
+
+    return () => clearTimeout(initialTimeout);
+  }, [user]);
+
+  const removeNotification = (displayId) => {
+    setNotifications(prev => prev.filter(n => n.displayId !== displayId));
+  };
 
   // Initialize posts
   useEffect(() => {
@@ -144,7 +180,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
     setFilteredPosts(filtered);
   }, [posts, filterTab, user]);
 
-  const getUserInitials = (name: string) => {
+  const getUserInitials = (name) => {
     return name
       .split(' ')
       .map(n => n[0])
@@ -156,7 +192,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
   const handlePostSubmit = () => {
     if (!postText.trim() || !user) return;
 
-    const newPost: Post = {
+    const newPost = {
       id: `post_${Date.now()}`,
       userId: user.id,
       content: postText.trim(),
@@ -172,7 +208,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
     setPostText('');
   };
 
-  const handleLike = (postId: string) => {
+  const handleLike = (postId) => {
     if (!user) return;
 
     const updatedPosts = posts.map(post => {
@@ -193,7 +229,7 @@ const Dashboard: React.FC<DashboardProps> = () => {
     localStorage.setItem('linkedout_posts', JSON.stringify(updatedPosts));
   };
 
-  const handleComment = (postId: string, comment: string) => {
+  const handleComment = (postId, comment) => {
     const updatedPosts = posts.map(post => {
       if (post.id === postId) {
         return {
@@ -208,12 +244,12 @@ const Dashboard: React.FC<DashboardProps> = () => {
     localStorage.setItem('linkedout_posts', JSON.stringify(updatedPosts));
   };
 
-  const handleShare = (postId: string) => {
+  const handleShare = (postId) => {
     // For now, just show a success message
     console.log(`Post ${postId} shared!`);
   };
 
-  const insertQuickText = (text: string) => {
+  const insertQuickText = (text) => {
     setPostText(prev => prev + (prev ? '\n\n' : '') + text);
   };
 
@@ -383,6 +419,15 @@ const Dashboard: React.FC<DashboardProps> = () => {
           <SidebarRight />
         </MainLayout>
       </DashboardContainer>
+
+      {/* Auto-displaying notifications */}
+      {notifications.map((notification) => (
+        <NotificationToast
+          key={notification.displayId}
+          notification={notification}
+          onClose={() => removeNotification(notification.displayId)}
+        />
+      ))}
     </>
   );
 };

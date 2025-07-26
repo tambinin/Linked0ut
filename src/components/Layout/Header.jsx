@@ -92,7 +92,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 const NavButton = styled(IconButton, {
   shouldForwardProp: (prop) => prop !== 'active',
-})<{ active?: boolean }>(({ theme, active }) => ({
+})(({ theme, active }) => ({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
@@ -117,7 +117,7 @@ const NavLabel = styled(Typography)(({ theme }) => ({
 
 const ProfileButton = styled(Button, {
   shouldForwardProp: (prop) => prop !== 'active',
-})<{ active?: boolean }>(({ theme }) => ({
+})(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',

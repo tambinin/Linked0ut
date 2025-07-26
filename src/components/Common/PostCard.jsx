@@ -11,6 +11,8 @@ import {
   MenuItem,
   TextField,
   Collapse,
+  Tooltip,
+  Fade,
   styled,
 } from '@mui/material';
 import {
@@ -22,8 +24,8 @@ import {
   Send as SendIcon,
 } from '@mui/icons-material';
 import { colors } from '../../styles/theme';
-import { Post, SAMPLE_USERS } from '../../data/mockData';
-import { useAuth } from '../../context/AuthContext';
+import { SAMPLE_USERS, SAMPLE_COMMENTS } from '../../data/mockData.js';
+import { useAuth } from '../../context/AuthContext.jsx';
 
 const PostCard = styled(Card)(({ theme }) => ({
   marginBottom: theme.spacing(2),
@@ -64,7 +66,7 @@ const PostActions = styled(CardActions)(({ theme }) => ({
 
 const ActionButton = styled(Button, {
   shouldForwardProp: (prop) => prop !== 'active',
-})<{ active?: boolean }>(({ theme, active }) => ({
+})(({ theme, active }) => ({
   flex: 1,
   color: active ? colors.blue : colors.greyDark,
   backgroundColor: active ? `${colors.blue}08` : 'transparent',
@@ -74,8 +76,14 @@ const ActionButton = styled(Button, {
   fontWeight: 500,
   padding: theme.spacing(1),
   minWidth: 'auto',
+  transition: 'all 0.2s ease-in-out',
   '&:hover': {
     backgroundColor: active ? `${colors.blue}12` : colors.greyLight,
+    transform: 'translateY(-1px)',
+    boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+  },
+  '&:active': {
+    transform: 'translateY(0)',
   },
 }));
 
@@ -96,16 +104,9 @@ const TimeDisplay = styled(Typography)(({ theme }) => ({
   color: colors.greyDark,
 }));
 
-interface PostCardProps {
-  post: Post;
-  onLike: (postId: string) => void;
-  onComment: (postId: string, comment: string) => void;
-  onShare: (postId: string) => void;
-}
-
-const PostCardComponent: React.FC<PostCardProps> = ({ post, onLike, onComment, onShare }) => {
+const PostCardComponent = ({ post, onLike, onComment, onShare }) => {
   const { user } = useAuth();
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [anchorEl, setAnchorEl] = useState(null);
   const [showComments, setShowComments] = useState(false);
   const [commentText, setCommentText] = useState('');
 
@@ -115,7 +116,19 @@ const PostCardComponent: React.FC<PostCardProps> = ({ post, onLike, onComment, o
   // Check if current user liked this post
   const isLiked = user ? post.likedBy.includes(user.id) : false;
 
-  const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
+  // Get comments for this post
+  const postComments = SAMPLE_COMMENTS.filter(comment => comment.postId === post.id);
+
+  const getUserInitials = (name) => {
+    return name
+      .split(' ')
+      .map(n => n[0])
+      .join('')
+      .toUpperCase()
+      .substring(0, 2);
+  };
+
+  const handleMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
 
@@ -140,7 +153,7 @@ const PostCardComponent: React.FC<PostCardProps> = ({ post, onLike, onComment, o
     navigator.clipboard.writeText(`${author?.name}: ${post.content}`);
   };
 
-  const formatTimeAgo = (timestamp: string) => {
+  const formatTimeAgo = (timestamp) => {
     const now = new Date();
     const postTime = new Date(timestamp);
     const diffMs = now.getTime() - postTime.getTime();
@@ -155,15 +168,6 @@ const PostCardComponent: React.FC<PostCardProps> = ({ post, onLike, onComment, o
     } else {
       return `il y a ${diffDays}j`;
     }
-  };
-
-  const getUserInitials = (name: string) => {
-    return name
-      .split(' ')
-      .map(n => n[0])
-      .join('')
-      .toUpperCase()
-      .substring(0, 2);
   };
 
   if (!author) return null;
@@ -270,27 +274,33 @@ const PostCardComponent: React.FC<PostCardProps> = ({ post, onLike, onComment, o
       )}
 
       <PostActions>
-        <ActionButton
-          active={isLiked}
-          startIcon={isLiked ? <ThumbUpIcon /> : <ThumbUpOutlinedIcon />}
-          onClick={handleLike}
-        >
-          J'aime
-        </ActionButton>
+        <Tooltip title={isLiked ? "Vous aimez déjà ce post !" : "Montrer votre soutien à cette technique"} arrow>
+          <ActionButton
+            active={isLiked}
+            startIcon={isLiked ? <ThumbUpIcon /> : <ThumbUpOutlinedIcon />}
+            onClick={handleLike}
+          >
+            J'aime
+          </ActionButton>
+        </Tooltip>
         
-        <ActionButton
-          startIcon={<CommentIcon />}
-          onClick={() => setShowComments(!showComments)}
-        >
-          Commenter
-        </ActionButton>
+        <Tooltip title="Partager vos propres expériences similaires" arrow>
+          <ActionButton
+            startIcon={<CommentIcon />}
+            onClick={() => setShowComments(!showComments)}
+          >
+            Commenter
+          </ActionButton>
+        </Tooltip>
         
-        <ActionButton
-          startIcon={<ShareIcon />}
-          onClick={handleShare}
-        >
-          Partager
-        </ActionButton>
+        <Tooltip title="Copier dans le presse-papier pour inspirer vos amis" arrow>
+          <ActionButton
+            startIcon={<ShareIcon />}
+            onClick={handleShare}
+          >
+            Partager
+          </ActionButton>
+        </Tooltip>
       </PostActions>
 
       {/* Comment Section */}
@@ -340,10 +350,64 @@ const PostCardComponent: React.FC<PostCardProps> = ({ post, onLike, onComment, o
             </Box>
           </CommentInput>
 
-          {/* Placeholder for existing comments */}
-          {post.comments > 0 && (
-            <Typography variant="body2" color="text.secondary" sx={{ fontSize: '0.75rem', textAlign: 'center', py: 1 }}>
-              Voir les {post.comments} commentaires...
+          {/* Display existing comments */}
+          {postComments.map((comment) => {
+            const commentAuthor = SAMPLE_USERS.find(u => u.id === comment.userId);
+            return (
+              <Fade in key={comment.id}>
+                <Box sx={{ display: 'flex', gap: 1, mb: 1.5, alignItems: 'flex-start' }}>
+                  <Avatar
+                    sx={{
+                      width: 28,
+                      height: 28,
+                      fontSize: '0.7rem',
+                      bgcolor: colors.yellow,
+                      color: colors.greyText,
+                    }}
+                  >
+                    {commentAuthor ? getUserInitials(commentAuthor.name) : 'U'}
+                  </Avatar>
+                  <Box sx={{ flex: 1 }}>
+                    <Box sx={{ 
+                      bgcolor: colors.greyLight, 
+                      borderRadius: 2, 
+                      p: 1.5,
+                      '&:hover': {
+                        bgcolor: '#F0F2F5',
+                        transition: 'background-color 0.2s ease'
+                      }
+                    }}>
+                      <Typography variant="body2" sx={{ fontWeight: 600, fontSize: '0.8rem', mb: 0.5 }}>
+                        {commentAuthor?.name || 'Utilisateur'}
+                      </Typography>
+                      <Typography variant="body2" sx={{ fontSize: '0.8rem', lineHeight: 1.4 }}>
+                        {comment.content}
+                      </Typography>
+                    </Box>
+                    <Typography variant="body2" sx={{ 
+                      fontSize: '0.7rem', 
+                      color: colors.greyDark, 
+                      mt: 0.5, 
+                      ml: 1 
+                    }}>
+                      {formatTimeAgo(comment.timestamp)}
+                    </Typography>
+                  </Box>
+                </Box>
+              </Fade>
+            );
+          })}
+
+          {/* Show total comments count if there are more */}
+          {post.comments > postComments.length && (
+            <Typography variant="body2" color="text.secondary" sx={{ 
+              fontSize: '0.75rem', 
+              textAlign: 'center', 
+              py: 1,
+              cursor: 'pointer',
+              '&:hover': { color: colors.blue }
+            }}>
+              Voir les {post.comments - postComments.length} autres commentaires...
             </Typography>
           )}
         </CommentSection>
