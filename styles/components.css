@@ -1,69 +1,20 @@
-/* LinkedOut - Component Styles */
+/* LinkedOut - LinkedIn-style Component Styles */
 
-/* Feed Components */
-.feed-container {
-    max-width: 100%;
-}
-
+/* LinkedIn-style Post Composer */
 .post-composer {
-    background-color: var(--bg-primary);
-    border-radius: var(--radius-md);
-    padding: var(--spacing-lg);
+    background-color: var(--bg-card);
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(0,0,0,0.15);
+    box-shadow: var(--shadow-card);
     margin-bottom: var(--spacing-lg);
-    box-shadow: var(--shadow-sm);
+    overflow: hidden;
 }
 
-.composer-input {
-    width: 100%;
-    min-height: 80px;
-    padding: var(--spacing-md);
-    border: 1px solid #ddd;
-    border-radius: var(--radius-md);
-    resize: vertical;
-    font-family: inherit;
-    font-size: var(--font-size-base);
-}
-
-.composer-actions {
+.composer-header {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: var(--spacing-md);
-}
-
-.composer-buttons {
-    display: flex;
-    gap: var(--spacing-sm);
-}
-
-.btn-secondary {
-    background-color: var(--bg-secondary);
-    color: var(--text-primary);
-    border: 1px solid #ddd;
-}
-
-.btn-secondary:hover {
-    background-color: #e5e5e5;
-}
-
-/* Post Card */
-.post {
-    background-color: var(--bg-primary);
-    border-radius: var(--radius-md);
+    align-items: flex-start;
     padding: var(--spacing-lg);
-    margin-bottom: var(--spacing-lg);
-    box-shadow: var(--shadow-sm);
-    transition: box-shadow 0.3s ease;
-}
-
-.post:hover {
-    box-shadow: var(--shadow-md);
-}
-
-.post-header {
-    display: flex;
-    align-items: center;
-    margin-bottom: var(--spacing-md);
+    gap: var(--spacing-md);
 }
 
 .post-avatar {
@@ -75,49 +26,414 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-weight: 600;
-    margin-right: var(--spacing-md);
+    font-weight: var(--font-weight-semibold);
     font-size: var(--font-size-lg);
+    flex-shrink: 0;
+}
+
+.composer-input {
+    width: 100%;
+    min-height: 48px;
+    padding: var(--spacing-md) var(--spacing-lg);
+    border: 1px solid #DADEE2;
+    border-radius: 25px;
+    resize: none;
+    font-family: inherit;
+    font-size: var(--font-size-sm);
+    background-color: var(--bg-tertiary);
+    outline: none;
+    transition: border-color 0.15s ease;
+}
+
+.composer-input:focus {
+    border-color: var(--primary-color);
+    background-color: var(--bg-primary);
+}
+
+.composer-input::placeholder {
+    color: var(--text-tertiary);
+}
+
+.composer-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 var(--spacing-lg) var(--spacing-lg);
+    border-top: 1px solid #E0E0E0;
+    margin-top: var(--spacing-md);
+    padding-top: var(--spacing-md);
+}
+
+.composer-buttons {
+    display: flex;
+    gap: var(--spacing-lg);
+}
+
+/* LinkedIn-style action buttons */
+.btn-secondary {
+    background: none;
+    border: none;
+    color: var(--text-tertiary);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: background-color 0.15s ease, color 0.15s ease;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.btn-secondary:hover {
+    background-color: var(--bg-tertiary);
+    color: var(--text-primary);
+}
+
+/* LinkedIn-style Post Cards */
+.post {
+    background-color: var(--bg-card);
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(0,0,0,0.15);
+    box-shadow: var(--shadow-card);
+    margin-bottom: var(--spacing-lg);
+    overflow: hidden;
+    transition: box-shadow 0.15s ease;
+}
+
+.post:hover {
+    box-shadow: var(--shadow-md);
+}
+
+.post-header {
+    display: flex;
+    align-items: center;
+    padding: var(--spacing-lg) var(--spacing-lg) 0;
+    margin-bottom: var(--spacing-md);
+}
+
+.post-info {
+    flex: 1;
 }
 
 .post-info h3 {
-    font-size: var(--font-size-base);
-    font-weight: 600;
-    margin-bottom: var(--spacing-xs);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+    margin: 0 0 2px 0;
+    color: var(--text-primary);
 }
 
 .post-meta {
-    font-size: var(--font-size-sm);
-    color: var(--text-secondary);
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.post-meta > div:first-child {
+    font-size: var(--font-size-xs);
+    color: var(--text-tertiary);
+    font-weight: var(--font-weight-normal);
+}
+
+.post-meta > div:last-child {
+    font-size: var(--font-size-xs);
+    color: var(--text-tertiary);
+    font-weight: var(--font-weight-normal);
 }
 
 .post-content {
+    padding: 0 var(--spacing-lg);
     margin-bottom: var(--spacing-md);
-    line-height: 1.6;
+    line-height: 1.5;
+    font-size: var(--font-size-sm);
+    color: var(--text-primary);
 }
 
 .post-actions {
     display: flex;
-    gap: var(--spacing-lg);
-    padding-top: var(--spacing-md);
-    border-top: 1px solid var(--bg-secondary);
+    justify-content: space-around;
+    border-top: 1px solid #E0E0E0;
+    margin: var(--spacing-md) 0 0 0;
 }
 
 .post-action {
+    flex: 1;
+    text-align: center;
+    padding: var(--spacing-sm) var(--spacing-md);
+    border: none;
+    background: none;
+    color: var(--text-tertiary);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-medium);
+    cursor: pointer;
+    transition: background-color 0.15s ease;
     display: flex;
     align-items: center;
-    gap: var(--spacing-xs);
-    color: var(--text-secondary);
-    text-decoration: none;
-    font-size: var(--font-size-sm);
-    padding: var(--spacing-xs) var(--spacing-sm);
-    border-radius: var(--radius-sm);
-    transition: all 0.3s ease;
+    justify-content: center;
+    gap: var(--spacing-sm);
 }
 
 .post-action:hover {
+    background-color: var(--bg-tertiary);
+    color: var(--text-primary);
+/* LinkedIn-style Feed Filters */
+.feed-filter {
+    display: flex;
+    gap: 0;
+    margin-bottom: var(--spacing-lg);
+    border-bottom: 1px solid #E0E0E0;
+    background-color: var(--bg-card);
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    border: 1px solid rgba(0,0,0,0.15);
+    border-bottom: none;
+    overflow: hidden;
+}
+
+.filter-btn {
+    flex: 1;
+    background: none;
+    border: none;
+    padding: var(--spacing-md) var(--spacing-lg);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--text-tertiary);
+    cursor: pointer;
+    transition: all 0.15s ease;
+    position: relative;
+    border-bottom: 2px solid transparent;
+}
+
+.filter-btn:hover {
+    color: var(--text-primary);
+    background-color: var(--bg-tertiary);
+}
+
+.filter-btn.active {
+    color: var(--text-primary);
+    border-bottom-color: var(--primary-color);
+    font-weight: var(--font-weight-semibold);
+}
+
+/* Profile Summary Styles (Left Sidebar) */
+.profile-summary-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+}
+
+.profile-avatar-medium {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background-color: var(--primary-color);
+    color: var(--text-white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: var(--font-weight-semibold);
+    font-size: var(--font-size-xl);
+}
+
+.profile-summary-info h3 {
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-semibold);
+    margin: 0 0 2px 0;
+    color: var(--text-primary);
+}
+
+.profile-summary-info p {
+    font-size: var(--font-size-xs);
+    color: var(--text-tertiary);
+    margin: 0;
+    line-height: 1.3;
+}
+
+/* Unemployment Counter */
+.unemployment-summary {
+    text-align: center;
+    padding: var(--spacing-lg) 0;
+    border-bottom: 1px solid #E0E0E0;
+    margin-bottom: var(--spacing-lg);
+}
+
+.counter-display {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.counter-number {
+    font-size: var(--font-size-3xl);
+    font-weight: var(--font-weight-bold);
     color: var(--primary-color);
-    background-color: rgba(0, 119, 181, 0.1);
+    line-height: 1;
+}
+
+.counter-label {
+    font-size: var(--font-size-xs);
+    color: var(--text-tertiary);
+    margin-top: var(--spacing-xs);
+    font-weight: var(--font-weight-medium);
+}
+
+/* Stats List */
+.stats-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.stat-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.stat-label {
+    font-size: var(--font-size-sm);
+    color: var(--text-tertiary);
+    font-weight: var(--font-weight-normal);
+}
+
+/* LinkedIn-style Buttons */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-sm) var(--spacing-lg);
+    border: 1px solid transparent;
+    border-radius: var(--radius-lg);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    min-height: 32px;
+    line-height: 1;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: var(--text-white);
+    border-color: var(--primary-color);
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-hover);
+    border-color: var(--primary-hover);
+}
+
+.btn-secondary {
+    background-color: transparent;
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.btn-secondary:hover {
+    background-color: var(--primary-color);
+    color: var(--text-white);
+}
+
+.btn-sm {
+    padding: var(--spacing-xs) var(--spacing-md);
+    font-size: var(--font-size-xs);
+    min-height: 24px;
+}
+
+/* Right Sidebar Components */
+.trending-skills,
+.job-preview,
+.tips-list,
+.recent-badges {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.skill-trend,
+.job-preview-item,
+.tip-item,
+.recent-badge {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    padding: var(--spacing-sm) 0;
+}
+
+.skill-trend {
+    justify-content: space-between;
+}
+
+.skill-name,
+.job-preview-title {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--text-primary);
+}
+
+.skill-trend-indicator {
+    font-size: var(--font-size-xs);
+    color: var(--success-color);
+    font-weight: var(--font-weight-medium);
+}
+
+.job-preview-company,
+.job-preview-salary {
+    font-size: var(--font-size-xs);
+    color: var(--text-tertiary);
+    margin: 2px 0;
+}
+
+.tip-icon,
+.badge-icon {
+    font-size: 16px;
+    flex-shrink: 0;
+}
+
+.tip-item p {
+    font-size: var(--font-size-xs);
+    color: var(--text-secondary);
+    margin: 0;
+    line-height: 1.4;
+}
+
+.badge-info {
+    flex: 1;
+}
+
+.badge-name {
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-medium);
+    color: var(--text-primary);
+}
+
+.badge-date {
+    font-size: var(--font-size-xs);
+    color: var(--text-tertiary);
+    margin-top: 2px;
+}
+
+.view-all-link {
+    font-size: var(--font-size-xs);
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: var(--font-weight-medium);
+}
+
+.view-all-link:hover {
+    text-decoration: underline;
+}
+
+/* Profile Actions */
+.profile-actions {
+    padding-top: var(--spacing-lg);
+    border-top: 1px solid #E0E0E0;
+}
+
+.profile-actions .btn {
+    width: 100%;
 }
 
 .post-action.liked {
