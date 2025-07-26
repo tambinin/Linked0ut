@@ -1,187 +1,46 @@
-# LinkedOut - Le LinkedIn des Chômeurs
+# Getting Started with Create React App
 
-Bienvenue sur **LinkedOut**, le réseau social qui célèbre l'art de ne pas travailler ! 
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-LinkedOut est une parodie humoristique de LinkedIn, créée pour mettre en avant les "compétences" en glandouille, les échecs professionnels mémorables, et connecter les experts en procrastination du monde entier.
+## Available Scripts
 
-## 🎯 Fonctionnalités
+In the project directory, you can run:
 
-### ✅ Système d'authentification complet
-- Connexion et inscription avec validation
-- Gestion des sessions utilisateur
-- Compte de démonstration inclus (`test@linkedout.com` / `password123`)
+### `npm start`
 
-### ✅ Profil utilisateur personnalisable
-- Compteur de jours sans emploi en temps réel
-- Section "Compétences inutiles" avec endorsements
-- Historique des échecs professionnels mémorables
-- Système de badges d'inactivité
-- Bio et informations personnalisables
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-### ✅ Système d'endorsements
-- Recommandations absurdes entre utilisateurs
-- Compétences comme "Expert en Netflix", "Maître du scroll infini"
-- Interface intuitive pour donner/recevoir des endorsements
+The page will reload if you make edits.\
+You will also see any lint errors in the console.
 
-### ✅ Fil d'actualité interactif
-- Publication de posts sur vos exploits de glandouille
-- Système de likes et commentaires
-- Filtres par type de contenu (exploits, échecs, etc.)
-- Partage d'échecs professionnels
+### `npm test`
 
-### ✅ Offres d'emploi bidons
-- Annonces parodiques hilarantes
-- "Testeur de canapé, 0€/h", "Ambassadeur du manque de motivation"
-- Système de candidature bidon avec messages humoristiques
-- Filtres et recherche avancée
+Launches the test runner in the interactive watch mode.\
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### ✅ Réseautage de glandeurs
-- Connexion avec d'autres experts en inactivité
-- Recherche d'utilisateurs par compétences
-- Demandes de connexion avec suggestions intelligentes
-- Statistiques du réseau étendu
+### `npm run build`
 
-### ✅ Badges et statistiques
-- Système de déblocage automatique de badges
-- "Centenaire du Chômage", "Maître Netflix", "Jamais Convoqué"
-- Statistiques personnelles détaillées
-- Analyse du réseau de connexions
+Builds the app for production to the `build` folder.\
+It correctly bundles React in production mode and optimizes the build for the best performance.
 
-### ✅ Interface responsive
-- Design moderne inspiré de LinkedIn
-- Mobile-friendly avec breakpoints adaptatifs
-- Mode sombre supporté
-- Couleurs et animations soignées
+The build is minified and the filenames include the hashes.\
+Your app is ready to be deployed!
 
-### ✅ Données de démonstration
-- 5 profils d'utilisateurs pré-créés avec historiques complets
-- 8 posts humoristiques dans le fil d'actualité
-- 5 offres d'emploi absurdes
-- Système d'endorsements pré-rempli
-- Badges et statistiques d'exemple
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-## 🚀 Installation et utilisation
+### `npm run eject`
 
-### Prérequis
-- Navigateur web moderne (Chrome, Firefox, Safari, Edge)
-- Serveur HTTP local (optionnel pour le développement)
+**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
-### Installation
-1. Clonez ou téléchargez le repository
-2. Ouvrez `index.html` dans votre navigateur
-   - Ou servez les fichiers via un serveur HTTP local :
-   ```bash
-   python3 -m http.server 8000
-   # Puis ouvrez http://localhost:8000
-   ```
+If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-### Utilisation
-1. **Connexion** : Utilisez le compte de démo ou créez un nouveau compte
-   - Email : `test@linkedout.com`
-   - Mot de passe : `password123`
-2. **Exploration** : Naviguez entre les différentes sections
-3. **Interaction** : Likez des posts, endorsez des compétences, postulez à des emplois bidons
-4. **Personnalisation** : Modifiez votre profil, ajoutez des compétences et des échecs
+Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
-## 🏗️ Architecture technique
+You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-### Structure des fichiers
-```
-LinkedOut/
-├── index.html              # Page de connexion/inscription
-├── dashboard.html           # Tableau de bord principal
-├── profile.html            # Page de profil utilisateur
-├── jobs.html               # Offres d'emploi bidons
-├── network.html            # Réseautage
-├── styles/
-│   ├── main.css            # Styles principaux
-│   ├── components.css      # Composants réutilisables
-│   └── responsive.css      # Styles responsive
-├── js/
-│   ├── auth.js             # Gestion authentification
-│   ├── profile.js          # Gestion des profils
-│   ├── feed.js             # Fil d'actualité
-│   ├── endorsements.js     # Système d'endorsements
-│   ├── jobs.js             # Offres d'emploi
-│   ├── network.js          # Réseautage
-│   ├── badges.js           # Système de badges
-│   ├── data.js             # Données de test
-│   └── utils.js            # Fonctions utilitaires
-├── assets/
-│   ├── images/             # Images par défaut
-│   └── icons/              # Icônes pour badges
-└── README.md               # Cette documentation
-```
+## Learn More
 
-### Technologies utilisées
-- **HTML5** : Structure sémantique
-- **CSS3** : Design moderne avec Grid et Flexbox
-- **JavaScript ES6+** : Logique applicative vanilla
-- **localStorage** : Persistance des données côté client
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-### Fonctionnalités techniques
-- Architecture modulaire orientée composants
-- Gestion d'état centralisée
-- Système de notification temps réel
-- Recherche et filtrage avancés
-- Gestion des erreurs et validation
-- Support du mode hors ligne
-
-## 🎨 Design et UX
-
-### Inspirations
-- Interface LinkedIn pour la familiarité
-- Couleurs professionnelles avec touches humoristiques
-- Icônes et emojis pour l'aspect ludique
-
-### Responsive Design
-- Mobile-first approach
-- Breakpoints : 480px, 768px, 1200px
-- Grilles CSS adaptatives
-- Navigation mobile optimisée
-
-### Accessibilité
-- Contraste suffisant
-- Navigation au clavier
-- Textes alternatifs
-- Support des lecteurs d'écran
-
-## 🔧 Développement
-
-### Ajout de nouvelles fonctionnalités
-1. Créer les composants HTML nécessaires
-2. Ajouter les styles CSS correspondants
-3. Implémenter la logique JavaScript
-4. Mettre à jour les données de test si nécessaire
-
-### Personnalisation
-- Modifiez les variables CSS dans `:root` pour changer les couleurs
-- Ajoutez de nouvelles compétences dans `js/data.js`
-- Créez de nouveaux badges dans le système de badges
-
-### Tests
-- Testez sur différents navigateurs
-- Vérifiez la responsivité sur mobile
-- Validez les interactions utilisateur
-- Contrôlez la persistance des données
-
-## 🤝 Contribution
-
-Les contributions sont les bienvenues ! Pour contribuer :
-1. Forkez le projet
-2. Créez une branche pour votre fonctionnalité
-3. Committez vos changements
-4. Poussez vers la branche
-5. Ouvrez une Pull Request
-
-## 📜 Licence
-
-Ce projet est sous licence MIT. Voir le fichier LICENSE pour plus de détails.
-
-## 🎭 Disclaimer
-
-LinkedOut est une parodie humoristique créée à des fins de divertissement et d'apprentissage. Ce projet n'a aucun lien officiel avec LinkedIn Corporation.
-
----
-
-**Créé avec ❤️ et beaucoup de procrastination**
+To learn React, check out the [React documentation](https://reactjs.org/).
