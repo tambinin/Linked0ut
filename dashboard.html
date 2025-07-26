@@ -14,6 +14,12 @@
             <nav class="app-nav">
                 <a href="dashboard.html" class="app-logo">LinkedOut</a>
                 
+                <!-- LinkedIn-style search bar -->
+                <div class="search-container">
+                    <input type="text" class="search-input" placeholder="Rechercher des chômeurs professionnels...">
+                    <button class="search-button">🔍</button>
+                </div>
+                
                 <ul class="nav-menu">
                     <li><a href="dashboard.html" class="nav-link active">Accueil</a></li>
                     <li><a href="profile.html" class="nav-link">Mon Profil</a></li>
@@ -22,8 +28,9 @@
                 </ul>
                 
                 <div class="user-menu">
+                    <div class="notification-icon">🔔</div>
                     <div class="user-avatar" id="user-avatar">JG</div>
-                    <button class="btn btn-secondary" onclick="window.LinkedOutAuth.logout()">Déconnexion</button>
+                    <button class="btn btn-secondary btn-sm" onclick="window.LinkedOutAuth.logout()">Déconnexion</button>
                 </div>
             </nav>
         </div>
