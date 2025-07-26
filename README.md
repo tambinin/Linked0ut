@@ -1,3 +1,11 @@
+# Team: StupidWave
+Juvence  
+Diary  
+Sitraka  
+Cedric  
+Mario  
+Idris  
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
