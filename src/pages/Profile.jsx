@@ -21,9 +21,9 @@ import {
 import Header from '../components/Layout/Header';
 import SidebarLeft from '../components/Layout/SidebarLeft';
 import SidebarRight from '../components/Layout/SidebarRight';
-import { useAuth } from '../context/AuthContext';
-import { colors } from '../styles/theme';
-import { BADGE_DEFINITIONS } from '../data/mockData';
+import { useAuth } from '../context/AuthContext.jsx';
+import { colors } from '../styles/theme.js';
+import { BADGE_DEFINITIONS } from '../data/mockData.js';
 
 const ProfileContainer = styled(Container)(({ theme }) => ({
   maxWidth: '1200px !important',
@@ -86,10 +86,10 @@ const BadgeItem = styled(Box)(({ theme }) => ({
   marginBottom: theme.spacing(1),
 }));
 
-const Profile: React.FC = () => {
+const Profile = () => {
   const { user } = useAuth();
 
-  const getUserInitials = (name: string) => {
+  const getUserInitials = (name) => {
     return name
       .split(' ')
       .map(n => n[0])
@@ -98,7 +98,7 @@ const Profile: React.FC = () => {
       .substring(0, 2);
   };
 
-  const calculateUnemploymentDays = (startDate: string) => {
+  const calculateUnemploymentDays = (startDate) => {
     const start = new Date(startDate);
     const now = new Date();
     const diffTime = Math.abs(now.getTime() - start.getTime());

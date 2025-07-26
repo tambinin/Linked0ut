@@ -24,9 +24,9 @@ import {
 import Header from '../components/Layout/Header';
 import SidebarLeft from '../components/Layout/SidebarLeft';
 import SidebarRight from '../components/Layout/SidebarRight';
-import { useAuth } from '../context/AuthContext';
-import { colors } from '../styles/theme';
-import { User, SAMPLE_USERS } from '../data/mockData';
+import { useAuth } from '../context/AuthContext.jsx';
+import { colors } from '../styles/theme.js';
+import { User, SAMPLE_USERS } from '../data/mockData.js';
 
 const NetworkContainer = styled(Container)(({ theme }) => ({
   maxWidth: '1200px !important',
@@ -83,13 +83,13 @@ const ConnectButton = styled(Button)(({ theme }) => ({
   },
 }));
 
-const Network: React.FC = () => {
+const Network = () => {
   const { user } = useAuth();
   const [tabValue, setTabValue] = useState(0);
   const [searchTerm, setSearchTerm] = useState('');
-  const [connectionRequests, setConnectionRequests] = useState<string[]>([]);
+  const [connectionRequests, setConnectionRequests] = useState([]);
 
-  const getUserInitials = (name: string) => {
+  const getUserInitials = (name) => {
     return name
       .split(' ')
       .map(n => n[0])
@@ -120,11 +120,11 @@ const Network: React.FC = () => {
     );
   };
 
-  const handleConnect = (userId: string) => {
+  const handleConnect = (userId) => {
     setConnectionRequests(prev => [...prev, userId]);
   };
 
-  const calculateUnemploymentDays = (startDate: string) => {
+  const calculateUnemploymentDays = (startDate) => {
     const start = new Date(startDate);
     const now = new Date();
     const diffTime = Math.abs(now.getTime() - start.getTime());
@@ -132,7 +132,7 @@ const Network: React.FC = () => {
     return diffDays;
   };
 
-  const getConnectionReason = (targetUser: User): string => {
+  const getConnectionReason = (targetUser: User) => {
     if (!user) return '';
     
     // Find common skills

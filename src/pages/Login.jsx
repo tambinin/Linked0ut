@@ -13,8 +13,8 @@ import {
   styled,
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
-import { colors } from '../styles/theme';
+import { useAuth } from '../context/AuthContext.jsx';
+import { colors } from '../styles/theme.js';
 
 const LoginContainer = styled(Container)(({ theme }) => ({
   minHeight: '100vh',
@@ -96,13 +96,9 @@ const DemoInfo = styled(Box)(({ theme }) => ({
   textAlign: 'center',
 }));
 
-interface TabPanelProps {
-  children?: React.ReactNode;
-  index: number;
-  value: number;
-}
+// Component for TabPanel - removed TypeScript interface
 
-function TabPanel(props: TabPanelProps) {
+function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
   return (
@@ -118,7 +114,7 @@ function TabPanel(props: TabPanelProps) {
   );
 }
 
-const Login: React.FC = () => {
+const Login = () => {
   const navigate = useNavigate();
   const { login, register, isLoading } = useAuth();
   const [tabValue, setTabValue] = useState(0);
@@ -138,7 +134,7 @@ const Login: React.FC = () => {
     title: '',
   });
 
-  const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
+  const handleTabChange = (event: React.SyntheticEvent, newValue) => {
     setTabValue(newValue);
     setError('');
   };

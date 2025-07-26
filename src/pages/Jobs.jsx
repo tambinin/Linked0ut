@@ -21,8 +21,8 @@ import {
 import Header from '../components/Layout/Header';
 import SidebarLeft from '../components/Layout/SidebarLeft';
 import SidebarRight from '../components/Layout/SidebarRight';
-import { colors } from '../styles/theme';
-import { Job, SAMPLE_JOBS } from '../data/mockData';
+import { colors } from '../styles/theme.js';
+import { Job, SAMPLE_JOBS } from '../data/mockData.js';
 
 const JobsContainer = styled(Container)(({ theme }) => ({
   maxWidth: '1200px !important',
@@ -102,10 +102,10 @@ const ApplyButton = styled(Button)(({ theme }) => ({
   },
 }));
 
-const Jobs: React.FC = () => {
-  const [jobs] = useState<Job[]>(SAMPLE_JOBS);
+const Jobs = () => {
+  const [jobs] = useState(SAMPLE_JOBS);
   const [searchTerm, setSearchTerm] = useState('');
-  const [appliedJobs, setAppliedJobs] = useState<string[]>([]);
+  const [appliedJobs, setAppliedJobs] = useState([]);
 
   const filteredJobs = jobs.filter(job =>
     job.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -113,11 +113,11 @@ const Jobs: React.FC = () => {
     job.description.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const handleApply = (jobId: string) => {
+  const handleApply = (jobId) => {
     setAppliedJobs(prev => [...prev, jobId]);
   };
 
-  const formatPostedTime = (timestamp: string) => {
+  const formatPostedTime = (timestamp) => {
     const now = new Date();
     const postTime = new Date(timestamp);
     const diffMs = now.getTime() - postTime.getTime();
