@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emplois Bidons - LinkedOut</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/components.css">
+    <link rel="stylesheet" href="styles/responsive.css">
+</head>
+<body class="app-layout">
+    <header class="app-header">
+        <div class="container">
+            <nav class="app-nav">
+                <a href="dashboard.html" class="app-logo">LinkedOut</a>
+                
+                <ul class="nav-menu">
+                    <li><a href="dashboard.html" class="nav-link">Accueil</a></li>
+                    <li><a href="profile.html" class="nav-link">Mon Profil</a></li>
+                    <li><a href="network.html" class="nav-link">Réseau</a></li>
+                    <li><a href="jobs.html" class="nav-link active">Emplois Bidons</a></li>
+                </ul>
+                
+                <div class="user-menu">
+                    <div class="user-avatar" id="user-avatar">JG</div>
+                    <button class="btn btn-secondary" onclick="window.LinkedOutAuth.logout()">Déconnexion</button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <!-- Left Sidebar -->
+        <aside class="sidebar-left">
+            <!-- Job Search -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Recherche d'Emplois</h3>
+                </div>
+                <div class="job-search">
+                    <div class="search-bar">
+                        <span class="search-icon">🔍</span>
+                        <input type="text" class="search-input" id="job-search" placeholder="Rechercher des postes bidons...">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Job Filters -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Filtres</h3>
+                </div>
+                <div class="job-filters-sidebar">
+                    <div class="filter-group">
+                        <label for="salary-filter">Salaire</label>
+                        <select id="salary-filter" class="filter-select">
+                            <option value="">Tous les salaires</option>
+                            <option value="0">0€/h (Parfait!)</option>
+                            <option value="negative">Salaire négatif</option>
+                            <option value="dreams">En rêves</option>
+                            <option value="negotiable">Négociable (vers le bas)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label for="type-filter">Type de contrat</label>
+                        <select id="type-filter" class="filter-select">
+                            <option value="">Tous les types</option>
+                            <option value="CDI">CDI (Chômage à Durée Indéterminée)</option>
+                            <option value="CDD">CDD (Chômage à Durée Déterminée)</option>
+                            <option value="Stage">Stage non rémunéré</option>
+                            <option value="Freelance">Freelance (Free = gratuit)</option>
+                            <option value="Bénévolat">Bénévolat intensif</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label for="location-filter">Lieu</label>
+                        <select id="location-filter" class="filter-select">
+                            <option value="">Tous les lieux</option>
+                            <option value="home">Domicile (lit)</option>
+                            <option value="couch">Canapé</option>
+                            <option value="remote">Remote (très remote)</option>
+                            <option value="imagination">Imagination Land</option>
+                            <option value="nowhere">Nulle part</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label for="experience-filter">Expérience requise</label>
+                        <select id="experience-filter" class="filter-select">
+                            <option value="">Toute expérience</option>
+                            <option value="none">Aucune (parfait!)</option>
+                            <option value="negative">Expérience négative acceptée</option>
+                            <option value="sleeping">Expert en sommeil</option>
+                            <option value="procrastination">Procrastination avancée</option>
+                        </select>
+                    </div>
+                    
+                    <button class="btn btn-primary" onclick="applyFilters()">Appliquer les filtres</button>
+                    <button class="btn btn-secondary" onclick="clearFilters()">Effacer</button>
+                </div>
+            </div>
+
+            <!-- Job Statistics -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Statistiques du Marché</h3>
+                </div>
+                <div class="job-stats">
+                    <div class="stat-item">
+                        <span class="stat-number" id="total-jobs">0</span>
+                        <span class="stat-label">Emplois bidons</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" id="applied-jobs">0</span>
+                        <span class="stat-label">Candidatures envoyées</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">0%</span>
+                        <span class="stat-label">Taux de réussite</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">∞</span>
+                        <span class="stat-label">Temps de réponse (jours)</span>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Jobs Content -->
+        <section class="main-jobs">
+            <!-- Jobs Header -->
+            <div class="jobs-header">
+                <h1>Emplois Bidons Disponibles</h1>
+                <p class="jobs-subtitle">Découvrez les meilleures opportunités de ne pas travailler</p>
+                
+                <div class="jobs-toolbar">
+                    <div class="jobs-count">
+                        <span id="jobs-count">0 emplois trouvés</span>
+                    </div>
+                    
+                    <div class="jobs-sort">
+                        <label for="sort-jobs">Trier par:</label>
+                        <select id="sort-jobs" class="filter-select">
+                            <option value="date">Date de publication</option>
+                            <option value="salary">Salaire (croissant)</option>
+                            <option value="applications">Nombre de candidatures</option>
+                            <option value="random">Aléatoire</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Featured Jobs -->
+            <div class="featured-jobs">
+                <h2>Emplois à la une</h2>
+                <div class="featured-jobs-grid" id="featured-jobs">
+                    <!-- Featured jobs will be loaded here -->
+                </div>
+            </div>
+
+            <!-- All Jobs -->
+            <div class="jobs-list">
+                <h2>Tous les emplois</h2>
+                <div class="jobs-container" id="jobs-container">
+                    <!-- Jobs will be loaded here -->
+                    <div class="loading-text">
+                        <div class="loading-spinner"></div>
+                        Chargement des opportunités de paresse...
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Right Sidebar -->
+        <aside class="sidebar-right">
+            <!-- Application Tips -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Conseils de Candidature</h3>
+                </div>
+                <div class="application-tips">
+                    <div class="tip-item">
+                        <span class="tip-icon">💡</span>
+                        <p>Mettez en avant votre expérience en procrastination</p>
+                    </div>
+                    <div class="tip-item">
+                        <span class="tip-icon">📝</span>
+                        <p>Écrivez votre CV en Comic Sans pour vous démarquer</p>
+                    </div>
+                    <div class="tip-item">
+                        <span class="tip-icon">⏰</span>
+                        <p>Postulez le vendredi soir à 23h59</p>
+                    </div>
+                    <div class="tip-item">
+                        <span class="tip-icon">🎯</span>
+                        <p>Demandez un salaire plus élevé que le PDG</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Applications -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Mes Candidatures</h3>
+                </div>
+                <div class="recent-applications" id="recent-applications">
+                    <p class="no-applications">Aucune candidature envoyée</p>
+                </div>
+            </div>
+
+            <!-- Job Alerts -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Alertes Emploi</h3>
+                </div>
+                <div class="job-alerts">
+                    <p>Recevez des notifications pour les nouveaux emplois bidons !</p>
+                    <div class="alert-form">
+                        <input type="text" placeholder="Mots-clés..." class="form-control">
+                        <button class="btn btn-primary">Créer une alerte</button>
+                    </div>
+                    <div class="active-alerts">
+                        <p class="no-alerts">Aucune alerte active</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Salary Simulator -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Simulateur de Salaire</h3>
+                </div>
+                <div class="salary-simulator">
+                    <p>Calculez combien vous devriez gagner en ne faisant rien :</p>
+                    <div class="simulator-inputs">
+                        <label>Années d'expérience en glandouille:</label>
+                        <input type="number" id="experience-years" placeholder="5" class="form-control">
+                        
+                        <label>Niveau de procrastination (1-10):</label>
+                        <input type="number" id="procrastination-level" min="1" max="10" placeholder="8" class="form-control">
+                        
+                        <button class="btn btn-primary" onclick="calculateSalary()">Calculer</button>
+                    </div>
+                    <div class="salary-result" id="salary-result" style="display: none;">
+                        <p>Salaire recommandé: <strong>0€/h</strong></p>
+                        <p><small>Vous êtes surqualifié pour tous les emplois disponibles!</small></p>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </main>
+
+    <!-- Job Details Modal -->
+    <div id="job-details-modal" class="modal hidden">
+        <div class="modal-content large">
+            <div class="modal-header">
+                <h3 id="modal-job-title">Détails de l'emploi</h3>
+                <button class="modal-close" onclick="closeJobModal()">&times;</button>
+            </div>
+            <div class="modal-body" id="job-details-content">
+                <!-- Job details will be loaded here -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeJobModal()">Fermer</button>
+                <button class="btn btn-primary" id="apply-job-btn" onclick="applyToJob()">Postuler (en vain)</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/utils.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/jobs.js"></script>
+    <script>
+        // Initialize jobs page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check authentication
+            if (!window.LinkedOutAuth.requireAuth()) {
+                return;
+            }
+
+            // Initialize data
+            window.LinkedOutData.init();
+            
+            // Initialize jobs
+            initializeJobs();
+        });
+
+        function initializeJobs() {
+            const currentUser = window.LinkedOutAuth.getCurrentUser();
+            
+            // Update user avatar
+            const avatar = document.getElementById('user-avatar');
+            avatar.textContent = window.LinkedOutUtils.StringUtils.getInitials(currentUser.name);
+            
+            // Initialize jobs manager
+            window.LinkedOutJobs.init();
+            
+            // Load jobs
+            loadJobs();
+            
+            // Initialize search
+            initializeSearch();
+            
+            // Initialize filters
+            initializeFilters();
+        }
+
+        function loadJobs() {
+            window.LinkedOutJobs.loadJobs();
+            updateJobStats();
+        }
+
+        function updateJobStats() {
+            const jobs = window.LinkedOutJobs.getJobs();
+            const appliedJobs = window.LinkedOutJobs.getAppliedJobs();
+            
+            document.getElementById('total-jobs').textContent = jobs.length;
+            document.getElementById('applied-jobs').textContent = appliedJobs.length;
+            document.getElementById('jobs-count').textContent = `${jobs.length} emplois trouvés`;
+        }
+
+        function initializeSearch() {
+            const searchInput = document.getElementById('job-search');
+            let searchTimeout;
+            
+            searchInput.addEventListener('input', function() {
+                clearTimeout(searchTimeout);
+                searchTimeout = setTimeout(() => {
+                    window.LinkedOutJobs.searchJobs(this.value);
+                }, 300);
+            });
+        }
+
+        function initializeFilters() {
+            const filterSelects = document.querySelectorAll('.filter-select');
+            filterSelects.forEach(select => {
+                select.addEventListener('change', applyFilters);
+            });
+            
+            const sortSelect = document.getElementById('sort-jobs');
+            sortSelect.addEventListener('change', function() {
+                window.LinkedOutJobs.sortJobs(this.value);
+            });
+        }
+
+        function applyFilters() {
+            const filters = {
+                salary: document.getElementById('salary-filter').value,
+                type: document.getElementById('type-filter').value,
+                location: document.getElementById('location-filter').value,
+                experience: document.getElementById('experience-filter').value
+            };
+            
+            window.LinkedOutJobs.filterJobs(filters);
+        }
+
+        function clearFilters() {
+            document.getElementById('salary-filter').value = '';
+            document.getElementById('type-filter').value = '';
+            document.getElementById('location-filter').value = '';
+            document.getElementById('experience-filter').value = '';
+            
+            window.LinkedOutJobs.clearFilters();
+        }
+
+        function closeJobModal() {
+            document.getElementById('job-details-modal').classList.add('hidden');
+        }
+
+        function applyToJob() {
+            const jobId = document.getElementById('apply-job-btn').dataset.jobId;
+            if (window.LinkedOutJobs.applyToJob(jobId)) {
+                closeJobModal();
+                updateJobStats();
+            }
+        }
+
+        function calculateSalary() {
+            const experience = document.getElementById('experience-years').value || 0;
+            const procrastination = document.getElementById('procrastination-level').value || 0;
+            
+            // Mock calculation
+            const resultDiv = document.getElementById('salary-result');
+            resultDiv.style.display = 'block';
+            
+            window.LinkedOutUtils.Notifications.show('Vous êtes surqualifié pour tous les emplois !', 'success');
+        }
+    </script>
+</body>
+</html>

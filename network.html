@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Réseau - LinkedOut</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/components.css">
+    <link rel="stylesheet" href="styles/responsive.css">
+</head>
+<body class="app-layout">
+    <header class="app-header">
+        <div class="container">
+            <nav class="app-nav">
+                <a href="dashboard.html" class="app-logo">LinkedOut</a>
+                
+                <ul class="nav-menu">
+                    <li><a href="dashboard.html" class="nav-link">Accueil</a></li>
+                    <li><a href="profile.html" class="nav-link">Mon Profil</a></li>
+                    <li><a href="network.html" class="nav-link active">Réseau</a></li>
+                    <li><a href="jobs.html" class="nav-link">Emplois Bidons</a></li>
+                </ul>
+                
+                <div class="user-menu">
+                    <div class="user-avatar" id="user-avatar">JG</div>
+                    <button class="btn btn-secondary" onclick="window.LinkedOutAuth.logout()">Déconnexion</button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <!-- Left Sidebar -->
+        <aside class="sidebar-left">
+            <!-- Network Search -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Rechercher des Glandeurs</h3>
+                </div>
+                <div class="network-search">
+                    <div class="search-bar">
+                        <span class="search-icon">🔍</span>
+                        <input type="text" class="search-input" id="network-search" placeholder="Nom, compétence, titre...">
+                    </div>
+                    <button class="btn btn-primary" onclick="searchNetwork()">Rechercher</button>
+                </div>
+            </div>
+
+            <!-- Network Filters -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Filtres</h3>
+                </div>
+                <div class="network-filters">
+                    <div class="filter-group">
+                        <label for="unemployment-filter">Durée de chômage</label>
+                        <select id="unemployment-filter" class="filter-select">
+                            <option value="">Toutes durées</option>
+                            <option value="novice">Novice (< 100 jours)</option>
+                            <option value="intermediate">Intermédiaire (100-365 jours)</option>
+                            <option value="expert">Expert (> 365 jours)</option>
+                            <option value="legend">Légende (> 1000 jours)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label for="skill-filter">Compétences</label>
+                        <select id="skill-filter" class="filter-select">
+                            <option value="">Toutes compétences</option>
+                            <option value="netflix">Expert Netflix</option>
+                            <option value="procrastination">Procrastination</option>
+                            <option value="gaming">Gaming</option>
+                            <option value="sieste">Champion de sieste</option>
+                            <option value="scroll">Scroll infini</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label for="badges-filter">Badges</label>
+                        <select id="badges-filter" class="filter-select">
+                            <option value="">Tous les badges</option>
+                            <option value="centenaire">Centenaire du Chômage</option>
+                            <option value="netflix">Maître Netflix</option>
+                            <option value="gaming">Elite Gaming</option>
+                            <option value="procrastination">Dieu de la Procrastination</option>
+                        </select>
+                    </div>
+                    
+                    <button class="btn btn-primary" onclick="applyNetworkFilters()">Appliquer</button>
+                    <button class="btn btn-secondary" onclick="clearNetworkFilters()">Effacer</button>
+                </div>
+            </div>
+
+            <!-- Network Stats -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Statistiques du Réseau</h3>
+                </div>
+                <div class="network-stats">
+                    <div class="stat-item">
+                        <span class="stat-number" id="total-connections">0</span>
+                        <span class="stat-label">Mes connexions</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" id="pending-requests">0</span>
+                        <span class="stat-label">Demandes en attente</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" id="network-size">0</span>
+                        <span class="stat-label">Réseau étendu</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" id="total-members">5</span>
+                        <span class="stat-label">Membres LinkedOut</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Suggested Skills -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Compétences Tendances</h3>
+                </div>
+                <div class="trending-skills">
+                    <div class="skill-trend-item">
+                        <span class="skill-name">Netflix Expert</span>
+                        <span class="skill-growth">+25%</span>
+                    </div>
+                    <div class="skill-trend-item">
+                        <span class="skill-name">Procrastination Pro</span>
+                        <span class="skill-growth">+18%</span>
+                    </div>
+                    <div class="skill-trend-item">
+                        <span class="skill-name">Gaming Elite</span>
+                        <span class="skill-growth">+15%</span>
+                    </div>
+                    <div class="skill-trend-item">
+                        <span class="skill-name">Sieste Maître</span>
+                        <span class="skill-growth">+12%</span>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Network Content -->
+        <section class="main-network">
+            <!-- Network Header -->
+            <div class="network-header">
+                <h1>Mon Réseau de Glandeurs</h1>
+                <p class="network-subtitle">Connectez-vous avec d'autres experts en inactivité</p>
+                
+                <div class="network-tabs">
+                    <button class="network-tab active" data-tab="connections" onclick="switchNetworkTab('connections')">
+                        Mes Connexions (<span id="connections-count">0</span>)
+                    </button>
+                    <button class="network-tab" data-tab="discover" onclick="switchNetworkTab('discover')">
+                        Découvrir
+                    </button>
+                    <button class="network-tab" data-tab="requests" onclick="switchNetworkTab('requests')">
+                        Demandes (<span id="requests-count">0</span>)
+                    </button>
+                </div>
+            </div>
+
+            <!-- Connections Tab -->
+            <div class="network-content" id="connections-tab">
+                <div class="connections-grid" id="connections-grid">
+                    <!-- Connections will be loaded here -->
+                </div>
+            </div>
+
+            <!-- Discover Tab -->
+            <div class="network-content hidden" id="discover-tab">
+                <div class="discover-section">
+                    <h2>Glandeurs que vous pourriez connaître</h2>
+                    <div class="discover-grid" id="discover-grid">
+                        <!-- Suggested connections will be loaded here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Requests Tab -->
+            <div class="network-content hidden" id="requests-tab">
+                <div class="requests-section">
+                    <h2>Demandes de connexion</h2>
+                    <div class="requests-list" id="requests-list">
+                        <!-- Connection requests will be loaded here -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Right Sidebar -->
+        <aside class="sidebar-right">
+            <!-- Quick Actions -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Actions Rapides</h3>
+                </div>
+                <div class="quick-actions">
+                    <button class="btn btn-primary" onclick="inviteByEmail()">Inviter par email</button>
+                    <button class="btn btn-secondary" onclick="shareProfile()">Partager mon profil</button>
+                    <button class="btn btn-secondary" onclick="exportConnections()">Exporter mes connexions</button>
+                </div>
+            </div>
+
+            <!-- Connection Insights -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Analyse du Réseau</h3>
+                </div>
+                <div class="connection-insights">
+                    <div class="insight-item">
+                        <span class="insight-icon">📈</span>
+                        <div class="insight-content">
+                            <h4>Croissance du réseau</h4>
+                            <p>+2 nouvelles connexions cette semaine</p>
+                        </div>
+                    </div>
+                    <div class="insight-item">
+                        <span class="insight-icon">🏆</span>
+                        <div class="insight-content">
+                            <h4>Top compétence</h4>
+                            <p>Netflix Expert dans votre réseau</p>
+                        </div>
+                    </div>
+                    <div class="insight-item">
+                        <span class="insight-icon">⏰</span>
+                        <div class="insight-content">
+                            <h4>Moyenne de chômage</h4>
+                            <p>567 jours dans votre réseau</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Network Events -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Événements du Réseau</h3>
+                </div>
+                <div class="network-events">
+                    <div class="event-item">
+                        <div class="event-date">25 Jan</div>
+                        <div class="event-content">
+                            <h4>Meetup Procrastination</h4>
+                            <p>Conférence sur l'art de reporter (reportée)</p>
+                            <span class="event-attendees">12 intéressés</span>
+                        </div>
+                    </div>
+                    <div class="event-item">
+                        <div class="event-date">30 Jan</div>
+                        <div class="event-content">
+                            <h4>Marathon Netflix</h4>
+                            <p>Session collective de binge-watching</p>
+                            <span class="event-attendees">28 participants</span>
+                        </div>
+                    </div>
+                    <div class="event-item">
+                        <div class="event-date">05 Fév</div>
+                        <div class="event-content">
+                            <h4>Concours de Sieste</h4>
+                            <p>Qui dormira le plus longtemps ?</p>
+                            <span class="event-attendees">45 dormeurs</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Network Tips -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Conseils Réseau</h3>
+                </div>
+                <div class="network-tips">
+                    <div class="tip-item">
+                        <span class="tip-icon">💡</span>
+                        <p>Endorsez les compétences de vos connexions pour renforcer vos liens</p>
+                    </div>
+                    <div class="tip-item">
+                        <span class="tip-icon">🤝</span>
+                        <p>Partagez vos échecs pour créer de la complicité</p>
+                    </div>
+                    <div class="tip-item">
+                        <span class="tip-icon">🎯</span>
+                        <p>Connectez-vous avec des glandeurs de votre niveau</p>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </main>
+
+    <script src="js/utils.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/endorsements.js"></script>
+    <script src="js/network.js"></script>
+    <script>
+        // Initialize network page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check authentication
+            if (!window.LinkedOutAuth.requireAuth()) {
+                return;
+            }
+
+            // Initialize data
+            window.LinkedOutData.init();
+            
+            // Initialize network
+            initializeNetwork();
+        });
+
+        function initializeNetwork() {
+            const currentUser = window.LinkedOutAuth.getCurrentUser();
+            
+            // Update user avatar
+            const avatar = document.getElementById('user-avatar');
+            avatar.textContent = window.LinkedOutUtils.StringUtils.getInitials(currentUser.name);
+            
+            // Initialize network manager
+            window.LinkedOutNetwork.init();
+            
+            // Load network data
+            loadNetworkData();
+            
+            // Initialize search
+            initializeNetworkSearch();
+        }
+
+        function loadNetworkData() {
+            window.LinkedOutNetwork.loadConnections();
+            window.LinkedOutNetwork.loadDiscover();
+            window.LinkedOutNetwork.loadRequests();
+            updateNetworkStats();
+        }
+
+        function updateNetworkStats() {
+            const currentUser = window.LinkedOutAuth.getCurrentUser();
+            const pendingRequests = window.LinkedOutAuth.getPendingConnectionRequests();
+            
+            document.getElementById('total-connections').textContent = currentUser.connections.length;
+            document.getElementById('connections-count').textContent = currentUser.connections.length;
+            document.getElementById('pending-requests').textContent = pendingRequests.length;
+            document.getElementById('requests-count').textContent = pendingRequests.length;
+            
+            // Calculate extended network (connections of connections)
+            let extendedNetwork = new Set(currentUser.connections);
+            currentUser.connections.forEach(connectionId => {
+                const connection = window.LinkedOutAuth.getUserById(connectionId);
+                if (connection && connection.connections) {
+                    connection.connections.forEach(id => {
+                        if (id !== currentUser.id) {
+                            extendedNetwork.add(id);
+                        }
+                    });
+                }
+            });
+            document.getElementById('network-size').textContent = extendedNetwork.size;
+        }
+
+        function initializeNetworkSearch() {
+            const searchInput = document.getElementById('network-search');
+            let searchTimeout;
+            
+            searchInput.addEventListener('input', function() {
+                clearTimeout(searchTimeout);
+                searchTimeout = setTimeout(() => {
+                    if (this.value.trim()) {
+                        searchNetwork();
+                    } else {
+                        // Show default discover content
+                        window.LinkedOutNetwork.loadDiscover();
+                    }
+                }, 300);
+            });
+        }
+
+        function switchNetworkTab(tabName) {
+            // Update tab buttons
+            document.querySelectorAll('.network-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelector(`[data-tab="${tabName}"]`).classList.add('active');
+            
+            // Update content
+            document.querySelectorAll('.network-content').forEach(content => {
+                content.classList.add('hidden');
+            });
+            document.getElementById(`${tabName}-tab`).classList.remove('hidden');
+            
+            // Load appropriate content
+            switch(tabName) {
+                case 'connections':
+                    window.LinkedOutNetwork.loadConnections();
+                    break;
+                case 'discover':
+                    window.LinkedOutNetwork.loadDiscover();
+                    break;
+                case 'requests':
+                    window.LinkedOutNetwork.loadRequests();
+                    break;
+            }
+        }
+
+        function searchNetwork() {
+            const query = document.getElementById('network-search').value.trim();
+            if (!query) return;
+            
+            // Switch to discover tab to show results
+            switchNetworkTab('discover');
+            window.LinkedOutNetwork.searchUsers(query);
+        }
+
+        function applyNetworkFilters() {
+            const filters = {
+                unemployment: document.getElementById('unemployment-filter').value,
+                skill: document.getElementById('skill-filter').value,
+                badges: document.getElementById('badges-filter').value
+            };
+            
+            window.LinkedOutNetwork.applyFilters(filters);
+        }
+
+        function clearNetworkFilters() {
+            document.getElementById('unemployment-filter').value = '';
+            document.getElementById('skill-filter').value = '';
+            document.getElementById('badges-filter').value = '';
+            
+            window.LinkedOutNetwork.clearFilters();
+        }
+
+        function inviteByEmail() {
+            const email = prompt('Entrez l\'email de la personne à inviter:');
+            if (email && window.LinkedOutUtils.Validator.email(email)) {
+                window.LinkedOutUtils.Notifications.show(`Invitation envoyée à ${email} !`, 'success');
+            } else if (email) {
+                window.LinkedOutUtils.Notifications.show('Email invalide', 'error');
+            }
+        }
+
+        function shareProfile() {
+            const currentUser = window.LinkedOutAuth.getCurrentUser();
+            const shareText = `Regardez mon profil sur LinkedOut ! ${currentUser.name} - ${currentUser.title}`;
+            
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(shareText).then(() => {
+                    window.LinkedOutUtils.Notifications.show('Lien de profil copié !', 'success');
+                });
+            } else {
+                window.LinkedOutUtils.Notifications.show('Partage disponible bientôt !', 'warning');
+            }
+        }
+
+        function exportConnections() {
+            const currentUser = window.LinkedOutAuth.getCurrentUser();
+            const connections = currentUser.connections.map(id => {
+                const user = window.LinkedOutAuth.getUserById(id);
+                return user ? `${user.name} - ${user.title}` : 'Utilisateur inconnu';
+            });
+            
+            const exportData = `Mes connexions LinkedOut:\n\n${connections.join('\n')}`;
+            
+            // Create download
+            const blob = new Blob([exportData], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'mes-connexions-linkedout.txt';
+            a.click();
+            URL.revokeObjectURL(url);
+            
+            window.LinkedOutUtils.Notifications.show('Connexions exportées !', 'success');
+        }
+    </script>
+</body>
+</html>
