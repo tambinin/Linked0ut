@@ -134,12 +134,12 @@ const Login = () => {
     title: '',
   });
 
-  const handleTabChange = (event: React.SyntheticEvent, newValue) => {
+  const handleTabChange = (event, newValue) => {
     setTabValue(newValue);
     setError('');
   };
 
-  const handleLoginSubmit = async (e: React.FormEvent) => {
+  const handleLoginSubmit = async (e) => {
     e.preventDefault();
     setError('');
 
@@ -157,7 +157,7 @@ const Login = () => {
     }
   };
 
-  const handleRegisterSubmit = async (e: React.FormEvent) => {
+  const handleRegisterSubmit = async (e) => {
     e.preventDefault();
     setError('');
 

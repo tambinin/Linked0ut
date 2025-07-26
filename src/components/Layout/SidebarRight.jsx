@@ -80,9 +80,7 @@ const TrendingCard = styled(Card)(({ theme }) => ({
   borderRadius: theme.spacing(1),
 }));
 
-interface SidebarRightProps {}
-
-const SidebarRight: React.FC<SidebarRightProps> = () => {
+const SidebarRight = () => {
   // Get featured jobs (first 3)
   const featuredJobs = SAMPLE_JOBS.slice(0, 3);
 
@@ -117,7 +115,7 @@ const SidebarRight: React.FC<SidebarRightProps> = () => {
     },
   ];
 
-  const getUserInitials = (name: string) => {
+  const getUserInitials = (name) => {
     return name
       .split(' ')
       .map(n => n[0])

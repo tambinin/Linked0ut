@@ -109,12 +109,10 @@ const QuickLinkItem = styled(ListItem)(({ theme }) => ({
   },
 }));
 
-interface SidebarLeftProps {}
-
-const SidebarLeft: React.FC<SidebarLeftProps> = () => {
+const SidebarLeft = () => {
   const { user } = useAuth();
 
-  const getUserInitials = (name: string) => {
+  const getUserInitials = (name) => {
     return name
       .split(' ')
       .map(n => n[0])
@@ -123,7 +121,7 @@ const SidebarLeft: React.FC<SidebarLeftProps> = () => {
       .substring(0, 2);
   };
 
-  const calculateUnemploymentDays = (startDate: string) => {
+  const calculateUnemploymentDays = (startDate) => {
     const start = new Date(startDate);
     const now = new Date();
     const diffTime = Math.abs(now.getTime() - start.getTime());

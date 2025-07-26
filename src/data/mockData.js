@@ -1,7 +1,7 @@
 // LinkedOut - Mock Data for React Application
 
 // Sample users data
-export const SAMPLE_USERS: User[] = [
+export const SAMPLE_USERS = [
   {
     id: 'user_1',
     name: 'Jean Glandeur',
@@ -138,7 +138,7 @@ export const SAMPLE_USERS: User[] = [
 ];
 
 // Sample posts for the feed
-export const SAMPLE_POSTS: Post[] = [
+export const SAMPLE_POSTS = [
   {
     id: 'post_1',
     userId: 'user_1',
@@ -384,7 +384,7 @@ export const SAMPLE_COMMENTS = [
 ];
 
 // Sample job offers (parody)
-export const SAMPLE_JOBS: Job[] = [
+export const SAMPLE_JOBS = [
   {
     id: 'job_1',
     title: 'Testeur de Canapé Professionnel',
@@ -478,7 +478,7 @@ export const SAMPLE_JOBS: Job[] = [
 ];
 
 // Badge definitions
-export const BADGE_DEFINITIONS: Badge[] = [
+export const BADGE_DEFINITIONS = [
   {
     id: 'unemployed_100',
     title: 'Centenaire du Chômage',
